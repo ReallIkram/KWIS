@@ -1,0 +1,15 @@
+# Start the KWIS development environment
+
+Use the existing checkout at `/workspace/KWIS`. Each cloud task is already isolated. Do not create a Git worktree unless the user explicitly asks. Read any current AGENTS.md before coding and preserve user changes.
+
+Dependencies, the verified MongoDB binary, ignored server/.env, and `.local/data` can be retained in the environment snapshot. Running processes do not survive publication or a new task. Do not print `.env` or credential values. The generated local session key is for development only.
+
+1. `cd /workspace/KWIS`. Confirm Node 24 (or >=22.12 <26). If dependencies or local config are missing, run `bash scripts/setup.sh`; it uses npm ci, preserves existing config and prepares the official MongoDB binary with verification enabled.
+2. If `MONGODB_URI` is supplied externally, reuse it and do not start an unnecessary database. Otherwise start `npm run db:dev` in a persistent command session. It binds only 127.0.0.1:27017 and persists data in `.local/data`. Check its readiness message. Do not launch a second process if an existing local database is healthy.
+3. From the repository root run `npm run seed`. It only inserts absent records and never overwrites editorial content. A second run should report zero inserted records.
+4. Start `npm run dev` in a persistent session. It starts Express on port 5000 and Vite on 5173. Check `GET http://127.0.0.1:5000/api/v1/health` returns 200 with status ok. Fetch `/api/v1/public/content` and confirm published records are returned, not just an open port. Check Vite serves the `/KWIS/` base.
+5. No default admin is created. If the user needs their first owner account, follow README's secure `npm run admin:create` procedure. Do not invent production credentials. Browser tests create and remove their own disposable test account.
+6. Required development checks after changes: `npm run lint`, `npm run typecheck`, `MONGOMS_DOWNLOAD_DIR=/tmp/kwis-mongodb RUN_DB_TESTS=1 npm test`, `npm run build`. For browser checks with this image: `RUN_FULLSTACK_E2E=1 PLAYWRIGHT_CHROMIUM_EXECUTABLE=/usr/bin/chromium npm run test:e2e`. These need the local API/database/seed. Integration tests create/drop an isolated database; never run them against production credentials without an authorized disposable test database.
+7. Public routes use hash routing under the repository base. Do not provide localhost preview links in onboarding; use local requests and text results. `docs/admin-guide.md`, `docs/api.md`, `docs/deployment.md`, and `docs/status.md` explain the workflows and limits.
+
+Cloudinary signing credentials are required for image/video/private-resume smoke tests. SMTP is required for actual notification/password-reset delivery. Check existing configured names and presence before requesting missing values; never print them or request values in chat. Production Atlas and hosting are separate from this local development environment. GitHub Pages workflow intentionally waits for a real deployed API URL. Do not describe a local health check, saved configuration, or source push as a verified live production deployment.

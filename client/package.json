@@ -1,0 +1,38 @@
+{
+  "name": "@kwis/client",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.9.4",
+    "@tanstack/react-query": "^5.90.5",
+    "react-hook-form": "^7.65.0",
+    "@hookform/resolvers": "^5.2.2",
+    "zod": "^4.1.12",
+    "lucide-react": "^0.548.0",
+    "motion": "^12.23.24",
+    "@tiptap/react": "^3.7.2",
+    "@tiptap/starter-kit": "^3.7.2",
+    "dompurify": "^3.3.0"
+  },
+  "devDependencies": {
+    "vite": "^7.1.12",
+    "@vitejs/plugin-react": "^5.0.4",
+    "typescript": "^5.9.3",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "tailwindcss": "^4.1.16",
+    "@tailwindcss/vite": "^4.1.16",
+    "vitest": "^3.2.4",
+    "jsdom": "^27.0.1",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/jest-dom": "^6.9.1"
+  }
+}

@@ -1,0 +1,48 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run test:db
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - name: Browser presentation checks
+        run: npm run test:e2e -- tests/browser.spec.ts
+      - name: Start actual database and API
+        run: |
+          npm run db:dev > /tmp/kwis-db.log 2>&1 &
+          npm run dev -w server > /tmp/kwis-api.log 2>&1 &
+          for i in $(seq 1 40); do
+            if curl -fsS http://127.0.0.1:5000/api/v1/health; then break; fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:5000/api/v1/health
+          npm run seed
+        env:
+          MONGODB_URI: mongodb://127.0.0.1:27017/kwis
+          JWT_SECRET: ci-only-session-secret-never-use-in-production
+          FRONTEND_ORIGIN: http://127.0.0.1:5173,http://localhost:5173
+          NODE_ENV: test
+      - name: Full stack browser checks
+        run: RUN_FULLSTACK_E2E=1 npm run test:e2e -- tests/fullstack.spec.ts
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-results
+          path: test-results/

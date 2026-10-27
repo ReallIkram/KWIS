@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+# Hash routes cannot be individually disallowed here. Private API routes require authentication.
