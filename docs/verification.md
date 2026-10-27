@@ -1,18 +1,18 @@
 # Verification record
 
-Validated in the managed cloud environment on 27 October 2026:
+Validated in the managed cloud environment on 27–28 October 2026:
 
-| Check                   | Result                                                                                                   |
-| ----------------------- | -------------------------------------------------------------------------------------------------------- |
-| Reproducible setup      | `bash scripts/setup.sh` passed with `npm ci` and verified MongoDB preparation; existing config preserved |
-| Seed repeatability      | First local seed inserted 55 records; immediate second run inserted 0                                    |
-| TypeScript              | Both workspaces passed                                                                                   |
-| ESLint                  | Passed                                                                                                   |
-| Production build        | Vite frontend and TypeScript backend passed                                                              |
-| Unit/API/database tests | 19 passed: 2 client tests, 13 server security/content/media tests, 4 real MongoDB integration tests      |
-| Browser tests           | 7 passed: 5 fixture-based presentation/navigation tests, 2 real Express/MongoDB browser flows            |
-| Dependency audit        | Production dependency audit reported 0 vulnerabilities                                                   |
-| Local health            | Express returned HTTP 200 with database status ok                                                        |
+| Check                   | Result                                                                                                      |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------- |
+| Reproducible setup      | `bash scripts/setup.sh` passed with `npm ci` and verified MongoDB preparation; existing config preserved    |
+| Seed repeatability      | First local seed inserted 55 records; immediate second run inserted 0                                       |
+| TypeScript              | Both workspaces passed                                                                                      |
+| ESLint                  | Passed                                                                                                      |
+| Production build        | Vite frontend and TypeScript backend passed                                                                 |
+| Unit/API/database tests | 20 passed: 2 client tests, 14 server security/content/media/sitemap tests, 4 real MongoDB integration tests |
+| Browser tests           | 7 passed: 5 fixture-based presentation/navigation tests, 2 real Express/MongoDB browser flows               |
+| Dependency audit        | Production dependency audit reported 0 vulnerabilities                                                      |
+| Local health            | Express returned HTTP 200 with database status ok                                                           |
 
 The real browser workflow created an owner account solely for the test, signed in, added a team member, saved a private draft, verified it was absent publicly, published it, verified public visibility, edited without publishing, verified the old public version remained, republished, and deleted the member. A separate browser test submitted an actual contact inquiry and checked its MongoDB record. Test accounts and content were removed afterward. No production owner account or default password was created.
 

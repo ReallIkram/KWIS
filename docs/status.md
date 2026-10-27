@@ -32,7 +32,7 @@ No cloud uploads, real SMTP delivery, Atlas connection, production performance s
 
 ## Known scope gaps / deliberate limitations
 
-- SEO: hash-routing metadata is client-rendered; no SSR, route prerenderer, dynamic sitemap export, or crawler-visible live CMS sharing previews. Sitemap inclusion fields are currently reserved.
+- SEO: hash-routing metadata is client-rendered; no SSR, route prerenderer, or crawler-visible live CMS sharing previews. The live API sitemap honors exclusions, but hash route indexing is limited.
 - No scheduled publishing, visitor analytics, marketing mail/campaign system, MFA, document malware scanning, or automatic image derivative selection. Manual publish, actual content/inquiry counts, and basic persistent cloud assets are implemented.
 - The homepage builder uses safe predefined components, not a freeform design canvas. Reordering is saved as drafts and requires publishing the affected records. Preview currently focuses on the homepage/global shell, not individual unpublished detail pages.
 - Core public decorative copy and contact labels can be overridden in Website settings → Public website labels. Technical errors, validation hints and some utility/form interface labels remain application interface strings.

@@ -82,7 +82,7 @@ The frontend fetches published content at runtime with no-store and 15-second re
 
 ## SEO tradeoff
 
-Hash routes make GitHub Pages refreshes reliable but are unsuitable for strong per-page SEO. The SPA updates metadata after JavaScript runs; many social crawlers will see only the root HTML. The baseline sitemap therefore lists the root, not invented crawlable hash URLs. CMS noindex and metadata fields work in the client; sitemap inclusion fields are reserved for a future exporter. For search-critical launch, migrate public rendering to an SSR/prerender-capable host and define a content-aware revalidation strategy. GitHub Pages does not support SSR.
+Hash routes make GitHub Pages refreshes reliable but are unsuitable for strong per-page SEO. The SPA updates metadata after JavaScript runs; many social crawlers will see only the root HTML. The baseline sitemap therefore lists the root, not invented crawlable hash URLs. CMS noindex and metadata fields work in the client. The live `/api/v1/public/sitemap.xml` inventory honors publication state and exclusion flags; its hash-route entries still have limited crawler support. For search-critical launch, migrate public rendering to an SSR/prerender-capable host and define a content-aware revalidation strategy. GitHub Pages does not support SSR.
 
 ## Cloud task environment versus production
 

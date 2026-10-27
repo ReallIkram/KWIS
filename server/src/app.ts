@@ -16,6 +16,7 @@ import { requireAuth, adminOnly, issueSession, clearCookies, hash, passwordHash 
 import { upload, cloud } from './media.js';
 import { sendMail } from './mail.js';
 import pino from 'pino';
+import { sitemapXml } from './sitemap.js';
 export const logger = pino({ redact: ['password', 'token', 'cookie', 'authorization'] });
 const fail = (status: number, message: string) => Object.assign(new Error(message), { status });
 const id = z.string().regex(/^[a-f\d]{24}$/i);
@@ -155,6 +156,17 @@ export function createApp() {
     clearCookies(res);
     res.json({ data: true });
   });
+  app.get('/api/v1/public/sitemap.xml', async (_req, res) =>
+    res
+      .set('Cache-Control', 'no-store')
+      .type('application/xml')
+      .send(
+        sitemapXml(
+          await publicContent(),
+          process.env.PUBLIC_SITE_URL || 'https://reallikram.github.io/KWIS/',
+        ),
+      ),
+  );
   app.get('/api/v1/public/content', async (_req, res) => {
     res.set('Cache-Control', 'no-store');
     res.json({ data: await publicContent() });

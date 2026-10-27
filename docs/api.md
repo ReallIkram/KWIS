@@ -71,3 +71,5 @@ Editors can manage editorial content and submissions. Only administrators can ma
 | GET    | `/admin/resume/:id` | Protected signed download URL, 60-second expiration |
 
 Cloudinary must be configured; no filesystem fallback. Resume references are media IDs available only on private submissions. API does not expose raw credentials or password/reset-token hashes.
+
+`GET /public/sitemap.xml` returns a live XML inventory of published public routes, honoring noindex/excludeSitemap and same-origin canonical URLs. Hash-route entries do not imply deep-route indexing support by search engines.

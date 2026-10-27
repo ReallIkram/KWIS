@@ -61,7 +61,7 @@ Navigation: edit labels, destinations, enabled state and dropdown links. Footer:
 
 Theme: colors, supported font presets, radius and dark/light mode. Choose accessible colors and verify the public preview; arbitrary CSS and font execution are not supported. Office locations: city/province/country, full address, coordinates, map link/embed, contact details and office hours. The default uses city-level Abbottabad only. The public map derives a location query from the saved fields, or uses validated coordinates/admin-provided Google embed URL. Multiple office records are supported.
 
-SEO: page slug matches its target record slug. Metadata fields include title, description, canonical, social image and noindex. GitHub Pages hash routing limits deep-page indexing; sitemap flags are reserved for a future clean-route exporter and currently do not change the baseline root sitemap. See README for that limitation.
+SEO: page slug matches its target record slug. Metadata fields include title, description, canonical, social image and noindex. GitHub Pages hash routing limits deep-page indexing; the live API sitemap honors exclusion flags, while the static frontend sitemap remains a root baseline. See README for that limitation.
 
 ## Before launch
 

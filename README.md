@@ -90,7 +90,7 @@ In this cloud instance, set `PLAYWRIGHT_CHROMIUM_EXECUTABLE=/usr/bin/chromium` t
 
 ## SEO and limitations
 
-Dynamic metadata, semantic markup, social tags, canonical URLs, lazy images, a baseline root sitemap, and robots.txt are present. **Hash-based client routing is a deliberate GitHub Pages compatibility choice and limits route-level indexing and link previews.** The current sitemap lists the root only; CMS sitemap flags are reserved for a future clean-route prerender/export pipeline. Publishing CMS text does not regenerate static social preview HTML. No server-side rendering or Lighthouse score is claimed. Use a hosting platform supporting prerendering/SSR if deep-page search discovery is a launch requirement.
+Dynamic metadata, semantic markup, social tags, canonical URLs, lazy images, a baseline root sitemap, and robots.txt are present. **Hash-based client routing is a deliberate GitHub Pages compatibility choice and limits route-level indexing and link previews.** The static frontend sitemap lists the root; the live `/api/v1/public/sitemap.xml` inventory includes current published routes and honors CMS exclusions. Hash URLs have limited search-engine support. Publishing CMS text does not regenerate static social preview HTML. No server-side rendering or Lighthouse score is claimed. Use a hosting platform supporting prerendering/SSR if deep-page search discovery is a launch requirement.
 
 Scheduled publishing, automatic image derivative selection, malware scanning, 2FA, password reset delivery receipts, visitor analytics, and a drag-to-resize freeform page canvas are not implemented. The editor uses predefined safe components. See the checklist for external verification and launch prerequisites.
 
