@@ -1,6 +1,6 @@
 import { createContext, useContext, type ReactNode } from 'react';
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
-import { request } from './api';
+import { request, STATIC_MODE } from './api';
 import type { Entry } from './types';
 export const PreviewContext = createContext<Entry[] | null>(null);
 const ContentContext = createContext<UseQueryResult<{ data: Entry[] }, Error> | null>(null);
@@ -8,9 +8,9 @@ export function ContentProvider({ children }: { children: ReactNode }) {
   const query = useQuery({
     queryKey: ['public-content'],
     queryFn: () => request<{ data: Entry[] }>('/public/content'),
-    refetchInterval: 15000,
+    refetchInterval: STATIC_MODE ? false : 15000,
     refetchOnWindowFocus: true,
-    staleTime: 0,
+    staleTime: STATIC_MODE ? Infinity : 0,
   });
   return <ContentContext.Provider value={query}>{children}</ContentContext.Provider>;
 }

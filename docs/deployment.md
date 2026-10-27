@@ -6,7 +6,15 @@ Use the designated `ReallIkram/KWIS` repository. The corresponding GitHub Pages 
 
 GitHub Pages hosts only browser files. Express must run on a Node host; data belongs in MongoDB Atlas and media in Cloudinary. A running local database is not an Atlas deployment. No paid resources are created automatically.
 
-## 1. MongoDB Atlas
+## Publish the public site now — no credentials required
+
+Settings → Pages → Source should be GitHub Actions (as shown in your screenshot). Push to main or run the Pages workflow. It builds and tests the frontend and deploys without needing any repository API variable. No backend account or email credentials are required to display the initial public website.
+
+Without `VITE_API_BASE_URL`, the production frontend reads `initial-content.json`, generated from the explicitly authored initial public seed content. It contains no users, passwords, submissions or environment values. Team/portfolio/testimonial records remain empty until genuine content is provided. Contact, newsletter, application, and admin operations are explicitly unavailable; this mode never simulates saving data.
+
+To switch to the live CMS later, deploy the backend using the optional steps below, set `VITE_API_BASE_URL` and optionally `VITE_ADMIN_URL`, then rerun Pages. Once connected, content is read from the real API and publishes without frontend rebuilds. Changing the backend's secrets does not require rebuilding the frontend.
+
+## 1. MongoDB Atlas — when enabling the CMS
 
 Create an Atlas project/cluster and a least-privilege database user restricted to the application database. Configure access for your Node host's actual outbound addresses/private network. Keep TLS verification enabled; avoid unrestricted inbound access. Put the Atlas connection string in the Node host's **server-only** `MONGODB_URI`. Percent-encode special characters in database passwords. Provision backup and retention settings suitable for real inquiries and resumes.
 
@@ -47,7 +55,20 @@ The backend can serve `client/dist` at `/KWIS/`. Use its `#/admin/login` page fo
 
 If you instead run the admin directly on GitHub Pages against a separate-site API, set `COOKIE_SAME_SITE=none` and use HTTPS. Modern browser third-party-cookie blocking can still prevent login; this topology requires real browser testing and is not the recommended default. Never solve it by storing access tokens in localStorage or disabling browser protections.
 
-## 4. Email
+## 4. Email — optional, configure later
+
+You can leave all SMTP fields blank when publishing the public site. They are needed only when you enable outgoing inquiry notifications or password-reset emails.
+
+| Variable        | Meaning                                       | Typical example                                     |
+| --------------- | --------------------------------------------- | --------------------------------------------------- |
+| `SMTP_HOST`     | Email provider's outgoing mail server         | Gmail: `smtp.gmail.com`                             |
+| `SMTP_PORT`     | Connection port specified by the provider     | `587` (STARTTLS), or `465` (implicit TLS)           |
+| `SMTP_USER`     | Provider's SMTP username                      | Often your email address                            |
+| `SMTP_PASSWORD` | Provider's SMTP credential                    | App password or service credential; never commit it |
+| `MAIL_FROM`     | Authorized sender address shown to recipients | Your verified company email                         |
+| `MAIL_TO`       | Where inquiry notifications should arrive     | Your company's inbox                                |
+
+Use your actual provider's documented settings. Gmail normally requires an app password and account configuration; your ordinary account password is not a safe generic SMTP setting. These examples do not assume you use Gmail. Backend hosting environment variables or an ignored backend `.env` are appropriate; GitHub Pages cannot execute Express or read a server `.env` at runtime.
 
 Configure `SMTP_HOST`, `SMTP_PORT`, optional `SMTP_USER`/`SMTP_PASSWORD`, authorized `MAIL_FROM`, and notification recipient `MAIL_TO`. Port 465 enables implicit TLS; port 587 uses normal STARTTLS negotiation. Confirm your provider's TLS and sender requirements. Notifications use plain text and do not render user-provided HTML.
 
@@ -63,9 +84,9 @@ gh variable set VITE_ADMIN_URL --repo ReallIkram/KWIS --body 'https://YOUR-BACKE
 gh workflow run pages.yml --repo ReallIkram/KWIS
 ```
 
-Replace `YOUR-BACKEND-HOST` with the actual deployed host. These variables are public URLs, never secrets. Configure repository Settings → Pages → GitHub Actions. The Pages workflow runs after successful CI or on manual dispatch. It intentionally skips deployment while `VITE_API_BASE_URL` is absent, so it does not publish a website disconnected from its CMS.
+Replace `YOUR-BACKEND-HOST` with the actual deployed host. These variables are public URLs, never secrets. Configure repository Settings → Pages → GitHub Actions. The Pages workflow runs on pushes to main or manual dispatch. An absent API URL selects the standalone public version; a supplied URL selects the connected CMS version.
 
-The frontend fetches published content at runtime with no-store and 15-second refetch. Content publishing does not trigger another Actions build. Code changes and changes to build-time API/base/admin URLs do require a build.
+When connected to an API, the frontend fetches published content at runtime with no-store and 15-second refetch. Content publishing does not trigger another Actions build. Code changes and changes to build-time API/base/admin URLs do require a build.
 
 ## 6. Verify before announcing launch
 

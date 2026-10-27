@@ -2,7 +2,9 @@
 
 A React/TypeScript website and a MongoDB-backed editorial workspace for KWIS, Abbottabad, Khyber Pakhtunkhwa, Pakistan. Public content is read from the API at runtime. Saving drafts does not change published content; publishing updates the website without a frontend deployment.
 
-**Current status:** implemented and validated locally with a real disk-backed MongoDB, Express API, and Chromium. Production database, Cloudinary, SMTP, and backend hosting must be configured by the owner. No live production deployment or cloud upload is claimed. See [delivery checklist](docs/status.md), [admin guide](docs/admin-guide.md), [API reference](docs/api.md), and [deployment guide](docs/deployment.md).
+**Public hosting without credentials:** Push to `main` to deploy the initial public website on GitHub Pages. With no `VITE_API_BASE_URL`, production builds use bundled initial public content; forms and admin show clear unavailable notices. No MongoDB, Cloudinary, or SMTP credentials are needed for this version. Set the API URL and rebuild later to enable the real CMS. Do not upload a secret `.env` file to GitHub Pages.
+
+**CMS status:** implemented and validated locally with a real disk-backed MongoDB, Express API, and Chromium. Production database, Cloudinary, SMTP, and backend hosting must be configured by the owner. No live production deployment or cloud upload is claimed. See [delivery checklist](docs/status.md), [admin guide](docs/admin-guide.md), [API reference](docs/api.md), and [deployment guide](docs/deployment.md).
 
 ## Stack and structure
 
@@ -10,7 +12,7 @@ A React/TypeScript website and a MongoDB-backed editorial workspace for KWIS, Ab
 - `server/`: Express 5, TypeScript, Mongoose, bcrypt, short-lived JWT access cookies and rotated refresh sessions, Cloudinary, Nodemailer, Helmet, CORS, rate limits, Zod, server-side HTML and SVG sanitization.
 - `tests/`: Playwright presentation tests and actual API/database browser flows.
 - `server/src/*.test.ts`: security, validation, and MongoDB integration suites.
-- `.github/workflows/`: CI and API-gated GitHub Pages deployment.
+- `.github/workflows/`: CI and automatic GitHub Pages deployment, with or without a connected API.
 - `render.yaml`: backend deployment blueprint. It does not provision services until the owner applies it.
 
 ## Quick start

@@ -4,7 +4,7 @@ import { Menu, X, ArrowUpRight, MapPin, ArrowRight } from 'lucide-react';
 import { useContent } from '../content';
 import { useCopy } from '../copy';
 import { SafeLink, ButtonLink } from './UI';
-import { request, send } from '../api';
+import { request, send, STATIC_MODE } from '../api';
 import type { LinkItem } from '../types';
 export default function Layout({ children }: { children?: ReactNode }) {
   const { list, one, isLoading, error } = useContent();
@@ -179,37 +179,41 @@ export default function Layout({ children }: { children?: ReactNode }) {
             ))}
             <div>
               <h4>{copy('footer.newsletterTitle')}</h4>
-              <form
-                onSubmit={async (e) => {
-                  e.preventDefault();
-                  setStatus('Subscribing…');
-                  try {
-                    await request('/public/newsletter', send('POST', { email, website: '' }));
-                    setStatus('You’re on the list. Thank you!');
-                    setEmail('');
-                  } catch (e) {
-                    setStatus((e as Error).message);
-                  }
-                }}
-              >
-                <label className="sr-only" htmlFor="newsletter">
-                  Email address
-                </label>
-                <div className="newsletter">
-                  <input
-                    id="newsletter"
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Your email address"
-                  />
-                  <button aria-label="Subscribe">
-                    <ArrowRight size={18} />
-                  </button>
-                </div>
-                <small role="status">{status || copy('footer.newsletterNote')}</small>
-              </form>
+              {STATIC_MODE ? (
+                <p className="form-note">Newsletter signup is coming soon.</p>
+              ) : (
+                <form
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    setStatus('Subscribing…');
+                    try {
+                      await request('/public/newsletter', send('POST', { email, website: '' }));
+                      setStatus('You’re on the list. Thank you!');
+                      setEmail('');
+                    } catch (e) {
+                      setStatus((e as Error).message);
+                    }
+                  }}
+                >
+                  <label className="sr-only" htmlFor="newsletter">
+                    Email address
+                  </label>
+                  <div className="newsletter">
+                    <input
+                      id="newsletter"
+                      type="email"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Your email address"
+                    />
+                    <button aria-label="Subscribe">
+                      <ArrowRight size={18} />
+                    </button>
+                  </div>
+                  <small role="status">{status || copy('footer.newsletterNote')}</small>
+                </form>
+              )}
             </div>
           </div>
           <div className="footer-bottom">

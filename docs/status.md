@@ -12,7 +12,7 @@ This is a working local implementation, not a claim that every production accept
 - Cloudinary image/video/SVG library integration, file-signature validation, private PDF storage and protected expiring download integration.
 - Contact inbox, application workflow, newsletter list, status/notes, authenticated CSV, media metadata, profile and administrator account management.
 - Disk-backed local MongoDB startup/prepare scripts, idempotent seed and first-admin CLI without default credentials.
-- CI, GitHub Pages workflow gated on configured API, Render blueprint, configuration examples and operating documentation.
+- CI, GitHub Pages workflow supporting standalone public content without an API and connected CMS mode when configured, Render blueprint, configuration examples and operating documentation.
 
 ## Local checks
 
@@ -20,7 +20,7 @@ Final command results are reported in the handover. The automated suites cover f
 
 No cloud uploads, real SMTP delivery, Atlas connection, production performance scores, or deployed end-to-end behavior have been verified without those services. Passing a local build does not establish these results.
 
-## Required external launch prerequisites
+## Required prerequisites for live CMS/upload/email features (not for standalone public hosting)
 
 - Supply a production MongoDB Atlas URI and permit the backend to reach it.
 - Configure a Node hosting account/service, its public HTTPS URL, server session key, origins and proxy settings.
@@ -40,3 +40,5 @@ No cloud uploads, real SMTP delivery, Atlas connection, production performance s
 - UI testing covers desktop and 375px mobile flows, not every browser/device combination. Cloud storage, mail and production cookie behavior still require credentialed smoke tests.
 
 Remaining gaps are recorded here rather than silently marked complete. Further code work can address them independently of the external service setup.
+
+Standalone hosting: production builds without an API URL use a bundled initial-content snapshot. All persistence-dependent actions are explicitly unavailable until the real backend is enabled; no fake saving or login is provided.

@@ -7,7 +7,7 @@ import { SectionHeading, ButtonLink, RichText, SafeLink, Notice } from '../compo
 import { CardGrid, ExampleNotice } from '../components/Cards';
 import Sections from '../components/Sections';
 import ContactForm from '../components/ContactForm';
-import { request } from '../api';
+import { request, STATIC_MODE } from '../api';
 export function Home() {
   return <Sections page="home" />;
 }
@@ -268,6 +268,8 @@ function Application({ job }: { job: string }) {
   const copy = useCopy();
   const [status, setStatus] = useState('');
   const [busy, setBusy] = useState(false);
+  if (STATIC_MODE)
+    return <Notice>Online applications are not open yet. Please check back soon.</Notice>;
   return (
     <form
       className="application-form"

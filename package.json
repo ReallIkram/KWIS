@@ -18,7 +18,8 @@
     "db:dev": "npm run db:dev -w server",
     "dev:local": "concurrently -k \"npm run db:dev\" \"npm run dev\"",
     "test:db": "RUN_DB_TESTS=1 npm run test -w server -- src/integration.test.ts",
-    "db:prepare": "npm run db:prepare -w server"
+    "db:prepare": "npm run db:prepare -w server",
+    "test:static": "playwright test --config playwright.static.config.ts"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.0",

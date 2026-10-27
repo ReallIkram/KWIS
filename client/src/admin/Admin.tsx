@@ -18,7 +18,7 @@ import {
   Sun,
   Moon,
 } from 'lucide-react';
-import { request, send } from '../api';
+import { request, send, STATIC_MODE } from '../api';
 import { modules, fields } from './fields';
 import Auth from './Auth';
 import Layout from '../components/Layout';
@@ -244,6 +244,19 @@ function Preview() {
   );
 }
 export default function Admin() {
+  if (STATIC_MODE)
+    return (
+      <div className="screen-state">
+        <h1>Workspace not connected yet.</h1>
+        <p>Administration will be available when online services are enabled.</p>
+        <Link className="button" to="/">
+          Back to KWIS
+        </Link>
+      </div>
+    );
+  return <ConnectedAdmin />;
+}
+function ConnectedAdmin() {
   const cache = useQueryClient();
   const location = useLocation();
   const section = location.pathname.split('/')[2] || 'dashboard';

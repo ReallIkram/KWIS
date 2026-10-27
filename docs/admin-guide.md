@@ -1,5 +1,9 @@
 # KWIS owner’s guide
 
+## Standalone public hosting
+
+The website can be published before connecting its backend. In that mode, public pages use initial content and online forms/admin are explicitly unavailable. Configure the backend and its URL later to enable the CMS; no account or secret is required just to view the public website.
+
 ## Sign in and access
 
 Create your first administrator using the README command. There is no default password. Sign in at `#/admin/login`. On production, use the backend-hosted admin URL described in the deployment guide; this avoids third-party-cookie restrictions. Editors can manage content, uploads, applications and inquiries. Administrators additionally manage users and review the full activity log.

@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { ArrowUpRight, CheckCircle2 } from 'lucide-react';
-import { request, send } from '../api';
+import { request, send, STATIC_MODE } from '../api';
 import { useContent } from '../content';
 import { useCopy } from '../copy';
 const schema = z.object({
@@ -41,6 +41,12 @@ export default function ContactForm() {
       website: '',
     },
   });
+  if (STATIC_MODE)
+    return (
+      <p className="notice" role="status">
+        Online inquiries are not open yet. Please check back soon.
+      </p>
+    );
   return (
     <form
       className="contact-form"
